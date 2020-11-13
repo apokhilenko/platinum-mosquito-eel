@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { transformMetricsData } from "../helpers/metricsData";
-import { IMetricValue } from "../models/IMetricData";
-import { IResponseData } from "../models/IResponseData";
+import { IMetricValue } from "../models/MetricData";
+import { IResponseData } from "../models/ResponseData";
 import axios from "../services/axios";
 
 // TODO: this data to settings

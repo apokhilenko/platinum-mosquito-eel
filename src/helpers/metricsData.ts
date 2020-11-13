@@ -1,7 +1,8 @@
 import _ from "lodash";
 
-import { IMetricValue, IGroupedMetric } from "../models/IMetricData";
-import { IResponseData } from "../models/IResponseData";
+import { IMetricValue, IGroupedMetric } from "../models/MetricData";
+import { IResponseData } from "../models/ResponseData";
+import { formatNumber } from "./numbers";
 
 export function transformMetricsData(
   responseData: IResponseData
@@ -39,19 +40,24 @@ export function transformMetricsData(
   return metricDataMap;
 }
 
-export function groupMetrics(
+export function getMetricByKey(
   metrics: IMetricValue[],
-  groupByProperty: string
+  key: string,
+  valueTransformer?: (value: number) => number
 ): IGroupedMetric[] {
   const grouped: IGroupedMetric[] = _.chain(metrics)
-    // group by requested property
-    .groupBy(groupByProperty)
+    // group by requested key
+    .groupBy(key)
     // map to get only values from object and sum them
     .mapValues(function (v): number {
       return _.sumBy(v, "value");
     })
     // map item to convert it to IGroupedMetric object
     .map(function (value, key): IGroupedMetric {
+      if (valueTransformer) {
+        value = valueTransformer(value);
+      }
+
       return { name: key, value };
     })
     .value();
@@ -62,7 +68,7 @@ export function groupMetrics(
 export function getAverageValue(groupedMetrics: IGroupedMetric[]) {
   const sum = _.sumBy(groupedMetrics, "value");
 
-  return sum / groupedMetrics.length;
+  return formatNumber(sum / groupedMetrics.length);
 }
 
 function metricProcessor(
