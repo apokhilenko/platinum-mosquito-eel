@@ -5,19 +5,19 @@ import { IGroupedMetric } from "../../models/MetricData";
 import { IKpiConfig } from "../../models/KpiConfig";
 import { WidgetBase } from "../../components/WidgetBase";
 import { formatNumber } from "../../helpers/numbers";
-import { PrOpenedChart } from "./components/PrOpenedChart";
+import { PrReviewTimeChart } from "./components/PrReviewTimeChart";
 
-type PrOpenedWidgetProps = {
+type PrReviewTimeWidgetProps = {
   dateFrom: string;
   dateTo: string;
   metricName: string;
 };
 
-export function PrOpenedWidget({
+export function PrReviewTimeWidget({
   dateFrom,
   dateTo,
   metricName,
-}: PrOpenedWidgetProps) {
+}: PrReviewTimeWidgetProps) {
   let prReviewTime: IGroupedMetric[] = [];
   let average: number = 0;
 
@@ -32,7 +32,7 @@ export function PrOpenedWidget({
 
   return (
     <WidgetBase isLoading={isLoading} kpis={[kpiConfig]}>
-      <PrOpenedChart data={prReviewTime} average={average} />
+      <PrReviewTimeChart data={prReviewTime} average={average} />
     </WidgetBase>
   );
 }

@@ -11,12 +11,12 @@ import {
 } from "recharts";
 import { IGroupedMetric } from "../../../models/MetricData";
 
-type PrOpenedChartProps = {
+type PrReviewTimeChartProps = {
   data: IGroupedMetric[];
   average: number;
 };
 
-export function PrOpenedChart({ data, average }: PrOpenedChartProps) {
+export function PrReviewTimeChart({ data, average }: PrReviewTimeChartProps) {
   return (
     <ResponsiveContainer>
       <LineChart
