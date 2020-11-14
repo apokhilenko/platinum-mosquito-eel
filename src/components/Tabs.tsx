@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { ReactNode } from "react-dom/node_modules/@types/react";
 import {
   TabPanel as ReactTabPanel,
@@ -32,5 +33,9 @@ export function Tabs({ tabNames = [], renderHeader, children }: TabsProps) {
 }
 
 export function TabPanel({ children }: { children: ReactNode }) {
-  return <>{children}</>;
+  return <PanelWrapper>{children}</PanelWrapper>;
 }
+
+const PanelWrapper = styled.div`
+  height: 500px;
+`;
