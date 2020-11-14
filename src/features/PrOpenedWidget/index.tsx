@@ -1,6 +1,6 @@
 import React from "react";
 import { getMetricByKey, getAverageValue } from "../../helpers/metricsData";
-import { useMetricsData } from "../../hooks/useMetricsData";
+import { useMetricsData } from "../../contexts/MetricsContext";
 import { IGroupedMetric } from "../../models/MetricData";
 import { IKpiConfig } from "../../models/KpiConfig";
 import { WidgetBase } from "../../components/WidgetBase";
@@ -21,7 +21,7 @@ export function PrOpenedWidget({
   let prReviewTime: IGroupedMetric[] = [];
   let average: number = 0;
 
-  const { isLoading, data } = useMetricsData(dateFrom, dateTo, metricName);
+  const { isLoading, data, error } = useMetricsData(dateFrom, dateTo, metricName);
 
   if (data) {
     prReviewTime = getMetricByKey(data, "date", convertSecondToHour);
