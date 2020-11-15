@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { getMetricByKey, getAverageValue } from "../../helpers/metricsData";
 import { useMetricsData } from "../../contexts/MetricsContext";
 import { IGroupedMetric } from "../../models/MetricData";
@@ -18,15 +18,25 @@ export function PrReviewTimeWidget({
   dateTo,
   metricName,
 }: PrReviewTimeWidgetProps) {
-  let prReviewTime: IGroupedMetric[] = [];
-  let average: number = 0;
+  const { isLoading, data, error } = useMetricsData(
+    dateFrom,
+    dateTo,
+    metricName
+  );
 
-  const { isLoading, data, error } = useMetricsData(dateFrom, dateTo, metricName);
+  const { prReviewTime, average } = useMemo(
+    function () {
+      let prReviewTime: IGroupedMetric[] = [];
+      let average: number = 0;
 
-  if (data) {
-    prReviewTime = getMetricByKey(data, "date", convertSecondToHour);
-    average = getAverageValue(prReviewTime);
-  }
+      if (data) {
+        prReviewTime = getMetricByKey(data, "date", convertSecondToHour);
+        average = getAverageValue(prReviewTime);
+      }
+      return { prReviewTime, average };
+    },
+    [data]
+  );
 
   const kpiConfig = createKpiConfig(average);
 

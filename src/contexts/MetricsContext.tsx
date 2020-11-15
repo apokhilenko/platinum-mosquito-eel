@@ -5,10 +5,10 @@ import React, {
   useState,
   useContext,
 } from "react";
+import axios from "../services/axios";
 import { transformMetricsData } from "../helpers/metricsData";
 import { IMetricValue } from "../models/MetricData";
 import { IResponseData } from "../models/ResponseData";
-import axios from "../services/axios";
 import { settings } from "../settings";
 
 export const MetricsContext = createContext<MetricsContextProps>({
