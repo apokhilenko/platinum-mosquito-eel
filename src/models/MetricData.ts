@@ -13,3 +13,7 @@ export interface IGroupedMetric {
   name: string;
   value: number;
 }
+
+export interface IColorable {
+  color: string;
+}

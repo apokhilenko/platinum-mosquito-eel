@@ -7,11 +7,12 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
-import { IGroupedMetric } from "../../../models/MetricData";
+import { IColorable, IGroupedMetric } from "../../../models/MetricData";
 
 type PrOpenedChartProps = {
-  data: IGroupedMetric[];
+  data: (IGroupedMetric & IColorable)[];
 };
 
 export function PrOpenedChart({ data }: PrOpenedChartProps) {
@@ -32,7 +33,11 @@ export function PrOpenedChart({ data }: PrOpenedChartProps) {
           label={{ value: "PRs opened", angle: -90, position: "insideLeft" }}
         />
         <Tooltip />
-        <Bar name="PRs opened" dataKey="value" fill="#8884d8" maxBarSize={50} />
+        <Bar name="PRs opened" dataKey="value" maxBarSize={50}>
+          {data.map((entry) => {
+            return <Cell fill={entry.color} />;
+          })}
+        </Bar>
       </BarChart>
     </ResponsiveContainer>
   );

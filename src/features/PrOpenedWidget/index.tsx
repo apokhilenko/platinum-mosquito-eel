@@ -1,10 +1,11 @@
 import React, { useMemo } from "react";
 import { getMetricByKey, getAverageValue } from "../../helpers/metricsData";
 import { useMetricsData } from "../../contexts/MetricsContext";
-import { IGroupedMetric } from "../../models/MetricData";
+import { IColorable, IGroupedMetric } from "../../models/MetricData";
 import { IKpiConfig } from "../../models/KpiConfig";
 import { WidgetBase } from "../../components/WidgetBase";
 import { PrOpenedChart } from "./components/PrOpenedChart";
+import { generateHexColor } from "../../helpers/colors";
 
 type PrReviewTimeWidgetProps = {
   dateFrom: string;
@@ -25,11 +26,18 @@ export function PrOpenedWidget({
 
   const { prOpened, average } = useMemo(
     function () {
-      let prOpened: IGroupedMetric[] = [];
+      let prOpened: (IGroupedMetric & IColorable)[] = [];
       let average: number = 0;
 
       if (data) {
-        prOpened = getMetricByKey(data, "repoName");
+        const prOpenedBase = getMetricByKey(data, "repoName");
+        prOpened = prOpenedBase.map(function (item: IGroupedMetric) {
+          return {
+            ...item,
+            color: generateHexColor(),
+          };
+        });
+
         average = getAverageValue(prOpened);
       }
       return { prOpened, average };
