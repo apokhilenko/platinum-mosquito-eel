@@ -10,11 +10,13 @@ type DatePickerProps = {
   startDate: string | null;
   endDate: string | null;
   onDateChange: (startDate: string, endDate: string) => void;
+  title?: string;
 };
 export function DatePicker({
   startDate,
   endDate,
   onDateChange,
+  title,
 }: DatePickerProps) {
   const initialStartDateMoment = moment(startDate, settings.dateFormat);
   const initialEndDateMoment = moment(endDate, settings.dateFormat);
@@ -49,7 +51,7 @@ export function DatePicker({
   }
 
   return (
-    <DatePickerWrapper>
+    <DatePickerWrapper title={title}>
       <DateRangePicker
         small={true}
         noBorder={true}

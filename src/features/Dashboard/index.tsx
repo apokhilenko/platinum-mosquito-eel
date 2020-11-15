@@ -39,6 +39,7 @@ export function Dashboard() {
         renderHeader={function () {
           return (
             <DatePicker
+            title="Please, select range of dates to see metrics."
               startDate={dateFrom}
               endDate={dateTo}
               onDateChange={handleDateChange}
