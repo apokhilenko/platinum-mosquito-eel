@@ -9,18 +9,7 @@ import { transformMetricsData } from "../helpers/metricsData";
 import { IMetricValue } from "../models/MetricData";
 import { IResponseData } from "../models/ResponseData";
 import axios from "../services/axios";
-
-// TODO: this data to settings
-const ACCOUNT = 1;
-const TIMEZONE = 60;
-const REPOSITORIES = [
-  "github.com/athenianco/athenian-api",
-  "github.com/athenianco/athenian-webapp",
-  "github.com/athenianco/infrastructure",
-  "github.com/athenianco/metadata",
-];
-const METRICS = ["pr-review-time", "pr-opened"];
-const GRANULARITY = "day";
+import { settings } from "../settings";
 
 export const MetricsContext = createContext<MetricsContextProps>({
   isDataLoading: false,
@@ -56,7 +45,10 @@ export function MetricsProvider({ children }: { children: ReactNode }) {
     function () {
       async function getData() {
         // map over repositories to prepare repogroups param. This needs to split response and have data for each repository
-        const repogroups = REPOSITORIES.map(function (repoName, index) {
+        const repogroups = settings.repositories.map(function (
+          repoName,
+          index
+        ) {
           return [index];
         });
 
@@ -65,17 +57,17 @@ export function MetricsProvider({ children }: { children: ReactNode }) {
           response = await axios.post(url, {
             for: [
               {
-                repositories: REPOSITORIES,
+                repositories: settings.repositories,
                 repogroups: repogroups,
               },
             ],
-            metrics: METRICS,
+            metrics: settings.metrics,
             date_from: dateFrom,
             date_to: dateTo,
-            granularities: [GRANULARITY],
+            granularities: [settings.granularity],
             exclude_inactive: true,
-            account: ACCOUNT,
-            timezone: TIMEZONE,
+            account: settings.account,
+            timezone: settings.timezone,
           });
           const responseData: IResponseData = response && response.data;
           const data = transformMetricsData(responseData);
