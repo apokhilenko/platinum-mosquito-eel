@@ -56,6 +56,8 @@ export function DatePicker({
   return (
     <DatePickerWrapper title={title}>
       <DateRangePicker
+        inputIconPosition="before"
+        showDefaultInputIcon={true}
         small={true}
         noBorder={true}
         displayFormat={settings.dateFormat}
@@ -89,5 +91,30 @@ function restrictDates(startDate: Moment | null): (date: Moment) => boolean {
 }
 
 const DatePickerWrapper = styled.div`
-  border: 1px solid #aaa;
+  .DateRangePickerInput_calendarIcon {
+    margin-right: -5px;
+
+    svg {
+      fill: ${(props) => props.theme.mainColor};
+    }
+  }
+  .DateInput_input__focused {
+    border-color: ${(props) => props.theme.mainColor};
+  }
+  .DayPickerKeyboardShortcuts_show__bottomRight::before {
+    border-right: 33px solid ${(props) => props.theme.mainColor};
+  }
+  .CalendarDay__selected,
+  .CalendarDay__selected:active,
+  .CalendarDay__selected:hover {
+    background: ${(props) => props.theme.mainColor};
+    border: 1px double ${(props) => props.theme.mainColor};
+    color: ${(props) => props.theme.whiteColor};
+  }
+
+  .CalendarDay__selected_span {
+    background: ${(props) => props.theme.mainLightColor};
+    border: 1px double ${(props) => props.theme.mainLightColor};
+    color: ${(props) => props.theme.whiteColor};
+  }
 `;

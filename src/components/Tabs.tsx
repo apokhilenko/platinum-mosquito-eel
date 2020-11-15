@@ -20,7 +20,7 @@ export function Tabs({ tabNames = [], renderHeader, children }: TabsProps) {
   const tabIndex = urlTab ? parseInt(urlTab) : 0;
 
   function handleTabSelect(index: number): boolean {
-    // store selected tab in url 
+    // store selected tab in url
     updateUrlTab(index.toString());
 
     // return true to proceed to tab change
@@ -56,11 +56,21 @@ const TabListWrapper = styled.div`
 const HeaderWrapper = styled.div`
   position: absolute;
   right: 0;
-  top: -2px;
+  top: -5px;
 `;
 const PanelWrapper = styled.div`
   height: 500px;
 `;
 const StyledReactTabs = styled(ReactTabs)`
   padding: 10px;
+
+  .react-tabs__tab--selected,
+  .react-tabs__tab--selected:focus {
+    border: none;
+    border-bottom: 4px solid ${(props) => props.theme.mainColor};
+  }
+
+  .react-tabs__tab:focus {
+    box-shadow: none;
+  }
 `;
