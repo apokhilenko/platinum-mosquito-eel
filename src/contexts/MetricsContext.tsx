@@ -11,7 +11,6 @@ import { IResponseData } from "../models/ResponseData";
 import axios from "../services/axios";
 
 // TODO: this data to settings
-const URL = "https://api.athenian.co/v1/metrics/prs";
 const ACCOUNT = 1;
 const TIMEZONE = 60;
 const REPOSITORIES = [
@@ -42,7 +41,8 @@ export const MetricsContext = createContext<MetricsContextProps>({
     I would simply load data in dashboard and pass it to widgets.
     Or, if app meant to be bigger, and have lot more widgets/data - to use state management library.
 */
-export const MetricsProvider = ({ children }: { children: ReactNode }) => {
+export function MetricsProvider({ children }: { children: ReactNode }) {
+  const url: string = process.env.REACT_APP_API_URL || "";
   // TODO: consider useReducer intead of set of useState
   const [data, setData] = useState<Map<string, IMetricValue[]>>(
     new Map<string, IMetricValue[]>()
@@ -62,7 +62,7 @@ export const MetricsProvider = ({ children }: { children: ReactNode }) => {
 
         let response;
         try {
-          response = await axios.post(URL, {
+          response = await axios.post(url, {
             for: [
               {
                 repositories: REPOSITORIES,
@@ -77,14 +77,14 @@ export const MetricsProvider = ({ children }: { children: ReactNode }) => {
             account: ACCOUNT,
             timezone: TIMEZONE,
           });
+          const responseData: IResponseData = response && response.data;
+          const data = transformMetricsData(responseData);
+
+          setData(data);
         } catch (e) {
-          setError("Can't get metrics");
+          setError("Can't get metrics.");
         }
 
-        const responseData: IResponseData = response && response.data;
-        const data = transformMetricsData(responseData);
-
-        setData(data);
         setIsDataLoading(false);
       }
 
@@ -93,7 +93,7 @@ export const MetricsProvider = ({ children }: { children: ReactNode }) => {
         getData();
       }
     },
-    [dateFrom, dateTo]
+    [dateFrom, dateTo, url]
   );
 
   function initMetricsData(dateFrom: string, dateTo: string) {
@@ -112,7 +112,7 @@ export const MetricsProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </MetricsContext.Provider>
   );
-};
+}
 
 export function useMetricsData(dateFrom: string, dateTo: string, key: string) {
   const { initMetricsData, getMetricsData, isDataLoading, error } = useContext<
