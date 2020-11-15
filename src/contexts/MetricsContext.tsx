@@ -31,7 +31,7 @@ export const MetricsContext = createContext<MetricsContextProps>({
     Or, if app meant to be bigger, and have lot more widgets/data - to use state management library.
 */
 export function MetricsProvider({ children }: { children: ReactNode }) {
-  const url: string = process.env.REACT_APP_API_URL || "";
+  const url: string = "metrics/prs";
   // TODO: consider useReducer intead of set of useState
   const [data, setData] = useState<Map<string, IMetricValue[]>>(
     new Map<string, IMetricValue[]>()
