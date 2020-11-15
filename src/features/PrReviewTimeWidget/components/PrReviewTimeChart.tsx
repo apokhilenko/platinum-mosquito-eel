@@ -17,6 +17,8 @@ type PrReviewTimeChartProps = {
 };
 
 export function PrReviewTimeChart({ data, average }: PrReviewTimeChartProps) {
+  const interval = calculateTickInterval(data.length);
+
   return (
     <ResponsiveContainer>
       <LineChart
@@ -32,7 +34,7 @@ export function PrReviewTimeChart({ data, average }: PrReviewTimeChartProps) {
         <XAxis
           dataKey="name"
           name="Date"
-          interval={3}
+          interval={interval}
           angle={-30}
           dx={-30}
           dy={20}
@@ -52,4 +54,14 @@ export function PrReviewTimeChart({ data, average }: PrReviewTimeChartProps) {
       </LineChart>
     </ResponsiveContainer>
   );
+}
+
+function calculateTickInterval(length: number): number {
+  if (length > 60) {
+    return 3;
+  } else if (length > 40) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
