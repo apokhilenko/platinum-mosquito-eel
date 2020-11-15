@@ -8,9 +8,9 @@ import { settings } from "../../settings";
 import { Layout } from "../../components/Layout";
 
 const config = [
-  { name: "PR opened", metricName: "pr-opened", widget: PrOpenedWidget },
+  { name: "PRs opened", metricName: "pr-opened", widget: PrOpenedWidget },
   {
-    name: "PR review",
+    name: "PRs review time",
     metricName: "pr-review-time",
     widget: PrReviewTimeWidget,
   },

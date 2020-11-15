@@ -41,7 +41,7 @@ export function PrReviewTimeChart({ data, average }: PrReviewTimeChartProps) {
           height={55}
         />
         <YAxis
-          label={{ value: "Review time", angle: -90, position: "insideLeft" }}
+          label={{ value: "PRs review time", angle: -90, position: "insideLeft" }}
         />
         <Tooltip />
         <ReferenceLine y={average} label="Average" stroke="red" />
