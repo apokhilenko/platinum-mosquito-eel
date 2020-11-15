@@ -27,7 +27,7 @@ export function Dashboard() {
     return name;
   });
 
-  function handleDateChange(startDate: string, endDate: string) {
+  function handleDateChange(startDate: string, endDate: string): void {
     updateDateFromUrl(startDate);
     updateDateToUrl(endDate);
   }

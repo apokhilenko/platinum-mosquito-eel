@@ -65,7 +65,7 @@ export function getMetricByKey(
   return grouped;
 }
 
-export function getAverageValue(groupedMetrics: IGroupedMetric[]) {
+export function getAverageValue(groupedMetrics: IGroupedMetric[]): number {
   const sum = _.sumBy(groupedMetrics, "value");
 
   return formatNumber(sum / groupedMetrics.length);
