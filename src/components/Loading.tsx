@@ -3,7 +3,7 @@ import Loader from "react-loader-spinner";
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import { theme } from "../theme";
 
-export const Loading = () => {
+export function Loading() {
   return (
     <Loader
       type="BallTriangle"
@@ -13,4 +13,4 @@ export const Loading = () => {
       visible
     />
   );
-};
+}

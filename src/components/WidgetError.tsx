@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Loading } from "./Loading";
 
 const MainWrapper = styled.div`
   width: 100%;
@@ -10,10 +9,6 @@ const MainWrapper = styled.div`
   align-items: center;
 `;
 
-export function WidgetLoading() {
-  return (
-    <MainWrapper>
-      <Loading />
-    </MainWrapper>
-  );
+export function WidgetError({ message }: { message: string }) {
+  return <MainWrapper>{message}</MainWrapper>;
 }
