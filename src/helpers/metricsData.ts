@@ -1,4 +1,5 @@
 import _ from "lodash";
+import { METRIC_PR_OPENED, METRIC_PR_REVIEW_TIME } from "../constants/metrics";
 
 import { IMetricValue, IGroupedMetric } from "../models/MetricData";
 import { IResponseData } from "../models/ResponseData";
@@ -89,13 +90,13 @@ function metricProcessor(
   date: string
 ): IMetricValue | null {
   switch (metricName) {
-    case "pr-review-time":
-      // for "pr-review-time" format of data is "{number}s", so we need to extract that number
+    case METRIC_PR_REVIEW_TIME:
+      // for pr review time format of data is "{number}s", so we need to extract that number
       // possible, that in future, there will be not only "s" for seconds, but other units, so this case should be enhanced
       const value = metricValue ? parseInt(metricValue.toString()) : 0;
 
       return { date, repoName, value } as IMetricValue;
-    case "pr-opened":
+    case METRIC_PR_OPENED:
       return { date, repoName, value: metricValue || 0 } as IMetricValue;
     default:
       return null;

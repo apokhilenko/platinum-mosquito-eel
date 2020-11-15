@@ -1,3 +1,5 @@
+import { METRIC_PR_OPENED, METRIC_PR_REVIEW_TIME } from "./constants/metrics";
+
 export const settings = {
   dateFormat: "YYYY-MM-DD",
   maxRangeInMonths: 3,
@@ -11,6 +13,6 @@ export const settings = {
     "github.com/athenianco/infrastructure",
     "github.com/athenianco/metadata",
   ],
-  metrics: ["pr-review-time", "pr-opened"],
+  metrics: [METRIC_PR_REVIEW_TIME, METRIC_PR_OPENED],
   granularity: "day",
 };

@@ -6,12 +6,16 @@ import { DatePicker } from "../../components/DatePicker";
 import { useUrlState } from "../../hooks/useUrlState";
 import { settings } from "../../settings";
 import { Layout } from "../../components/Layout";
+import {
+  METRIC_PR_OPENED,
+  METRIC_PR_REVIEW_TIME,
+} from "../../constants/metrics";
 
 const config = [
-  { name: "PRs opened", metricName: "pr-opened", widget: PrOpenedWidget },
+  { name: "PRs opened", metricName: METRIC_PR_OPENED, widget: PrOpenedWidget },
   {
     name: "PRs review time",
-    metricName: "pr-review-time",
+    metricName: METRIC_PR_REVIEW_TIME,
     widget: PrReviewTimeWidget,
   },
 ];
