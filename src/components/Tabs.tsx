@@ -54,7 +54,7 @@ const TabListWrapper = styled.div`
 const HeaderWrapper = styled.div`
   position: absolute;
   right: 0;
-  top: 0;
+  top: -2px;
 `;
 const PanelWrapper = styled.div`
   height: 500px;

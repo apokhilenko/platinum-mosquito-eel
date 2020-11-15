@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import moment, { Moment } from "moment";
 import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
@@ -48,22 +49,25 @@ export function DatePicker({
   }
 
   return (
-    <DateRangePicker
-      small={true}
-      displayFormat={settings.dateFormat}
-      startDate={startDateMoment}
-      startDateId="start_date_id"
-      endDate={endDateMoment}
-      endDateId="end_date_id"
-      isOutsideRange={restrictDates(startDateMoment)}
-      onDatesChange={function ({ startDate, endDate }) {
-        handleDateChange(startDate, endDate);
-      }}
-      focusedInput={focusedInput}
-      onFocusChange={function (focusedInput) {
-        setFocusedInput(focusedInput);
-      }}
-    />
+    <DatePickerWrapper>
+      <DateRangePicker
+        small={true}
+        noBorder={true}
+        displayFormat={settings.dateFormat}
+        startDate={startDateMoment}
+        startDateId="start_date_id"
+        endDate={endDateMoment}
+        endDateId="end_date_id"
+        isOutsideRange={restrictDates(startDateMoment)}
+        onDatesChange={function ({ startDate, endDate }) {
+          handleDateChange(startDate, endDate);
+        }}
+        focusedInput={focusedInput}
+        onFocusChange={function (focusedInput) {
+          setFocusedInput(focusedInput);
+        }}
+      />
+    </DatePickerWrapper>
   );
 }
 
@@ -77,3 +81,7 @@ function restrictDates(startDate: Moment | null): (date: Moment) => boolean {
     return isAfterToday || isOutOfRangeOfStartDate;
   };
 }
+
+const DatePickerWrapper = styled.div`
+  border: 1px solid #aaa;
+`;
