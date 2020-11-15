@@ -31,6 +31,7 @@ export function PrOpenedWidget({
 
       if (data) {
         const prOpenedBase = getMetricByKey(data, "repoName");
+        // enhance data with random color
         prOpened = prOpenedBase.map(function (item: IGroupedMetric) {
           return {
             ...item,

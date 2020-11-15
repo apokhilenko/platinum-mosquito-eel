@@ -8,21 +8,29 @@ export function useUrlState(
   const parsed = queryString.parse(window.location.search);
   const value = parsed[name] ? (parsed[name] as string) : null;
 
+  // store it in state
   const [state, setState] = useState<string | null>(value);
 
   // set value without page reload
   function updateUrlQuery(data: string) {
+    // get current state of url
     const parsed = queryString.parse(window.location.search);
 
+    // compose new query
+    const query = queryString.stringify({ ...parsed, [name]: data });
+    // compose new url
     const newurl =
       window.location.protocol +
       "//" +
       window.location.host +
       window.location.pathname +
       "?" +
-      queryString.stringify({ ...parsed, [name]: data });
+      query;
+
+    // update url in browser history
     window.history.pushState({ path: newurl }, "", newurl);
 
+    // update state
     setState(data);
   }
 

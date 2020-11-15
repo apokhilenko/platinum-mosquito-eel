@@ -9,29 +9,40 @@ export function transformMetricsData(
 ): Map<string, IMetricValue[]> {
   const metricDataMap: Map<string, IMetricValue[]> = new Map();
 
+  // loop over calculated data from response
   for (let calculatedItem of responseData.calculated) {
+    // get repository name
     const repoName = calculatedItem.for.repositories[0];
 
+    // loop over specific calculated item
     for (let value of calculatedItem.values) {
+      // get date
       const date = value.date;
 
+      // loop over requested metrics
       for (let i = 0; i < responseData.metrics.length; i++) {
+        // get metric name
         const metricName = responseData.metrics[i];
+        // get metric value - value in values array have same index as metric in metrics array
         const metricValue = value.values[i];
 
-        const processedMetricValue = metricProcessor(
+        // process data to get metric value
+        const processedMetricValue: IMetricValue | null = metricProcessor(
           metricName,
           metricValue,
           repoName,
           date
         );
 
+        // get data for current metric from map
         const currentMetricData = metricDataMap.get(metricName);
+        // create array of current metric data + just processed metric data
         const newMetricData = [
           ...(currentMetricData || []),
           processedMetricValue,
         ] as IMetricValue[];
 
+        // set in map new metric data by metric name
         metricDataMap.set(metricName, newMetricData);
       }
     }
@@ -79,6 +90,8 @@ function metricProcessor(
 ): IMetricValue | null {
   switch (metricName) {
     case "pr-review-time":
+      // for "pr-review-time" format of data is "{number}s", so we need to extract that number
+      // possible, that in future, there will be not only "s" for seconds, but other units, so this case should be enhanced
       const value = metricValue ? parseInt(metricValue.toString()) : 0;
 
       return { date, repoName, value } as IMetricValue;

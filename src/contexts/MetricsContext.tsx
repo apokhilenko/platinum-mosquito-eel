@@ -21,18 +21,19 @@ export const MetricsContext = createContext<MetricsContextProps>({
 });
 
 /*
-    NOTE: I implemented next provider because of two points:
+    NOTE: This provider was implemented because of two points:
     1. To show ability to work with custom composite hooks
     2. To decouple knowldge of possible metrics data from dashboard and give widgets possibility to be smart 
     and load required data. This will help if there will be more widgets that require data from this request.
 
     However, in real app and dashboard, that would have only two widgets that depends on this data, 
-    I would simply load data in dashboard and pass it to widgets.
+    app should simply load data in dashboard and pass it to widgets.
     Or, if app meant to be bigger, and have lot more widgets/data - to use state management library.
 */
 export function MetricsProvider({ children }: { children: ReactNode }) {
   const url: string = "metrics/prs";
   // TODO: consider useReducer intead of set of useState
+  // cached data to use in widgets
   const [data, setData] = useState<Map<string, IMetricValue[]>>(
     new Map<string, IMetricValue[]>()
   );
@@ -85,7 +86,7 @@ export function MetricsProvider({ children }: { children: ReactNode }) {
         getData();
       }
     },
-    [dateFrom, dateTo, url]
+    [dateFrom, dateTo]
   );
 
   function initMetricsData(dateFrom: string, dateTo: string) {
@@ -106,6 +107,7 @@ export function MetricsProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// special hook that encapsulates working with context and offers data from state
 export function useMetricsData(dateFrom: string, dateTo: string, key: string) {
   const { initMetricsData, getMetricsData, isDataLoading, error } = useContext<
     MetricsContextProps

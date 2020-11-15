@@ -20,8 +20,10 @@ export function Tabs({ tabNames = [], renderHeader, children }: TabsProps) {
   const tabIndex = urlTab ? parseInt(urlTab) : 0;
 
   function handleTabSelect(index: number): boolean {
+    // store selected tab in url 
     updateUrlTab(index.toString());
 
+    // return true to proceed to tab change
     return true;
   }
 

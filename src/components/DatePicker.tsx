@@ -18,9 +18,11 @@ export function DatePicker({
   onDateChange,
   title,
 }: DatePickerProps) {
+  // convert initial dates to moment objects
   const initialStartDateMoment = moment(startDate, settings.dateFormat);
   const initialEndDateMoment = moment(endDate, settings.dateFormat);
 
+  // we keep internal date picker state in order to trigger onDateChange only if both dates are selected
   const [startDateMoment, setStartDateMoment] = useState<Moment | null>(
     initialStartDateMoment
   );
@@ -38,6 +40,7 @@ export function DatePicker({
     setStartDateMoment(startDateMoment);
     setEndDateMoment(endDateMoment);
 
+    // trigger external event only if range selected
     if (startDateMoment && endDateMoment) {
       const startDate = startDateMoment
         ? startDateMoment.format(settings.dateFormat)
@@ -76,6 +79,7 @@ export function DatePicker({
 function restrictDates(startDate: Moment | null): (date: Moment) => boolean {
   return function restrictDatesInternal(date: Moment): boolean {
     const isAfterToday: boolean = date.isAfter(moment());
+    // restrict end date of range by start date + max range from settings
     const isOutOfRangeOfStartDate: boolean = startDate
       ? date.isAfter(startDate.clone().add(settings.maxRangeInMonths, "month"))
       : false;
