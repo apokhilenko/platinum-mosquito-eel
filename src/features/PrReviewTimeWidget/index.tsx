@@ -31,7 +31,7 @@ export function PrReviewTimeWidget({
   const kpiConfig = createKpiConfig(average);
 
   return (
-    <WidgetBase isLoading={isLoading} kpis={[kpiConfig]}>
+    <WidgetBase isLoading={isLoading} kpis={[kpiConfig]} errorMessage={error}>
       <PrReviewTimeChart data={prReviewTime} average={average} />
     </WidgetBase>
   );
